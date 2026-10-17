@@ -1,0 +1,14 @@
+# Каждые 30 минут дёргает напоминания бота на Vercel.
+name: reminders
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Напоминания
+        run: |
+          curl -fsS -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.BOT_URL }}/api/cron"
